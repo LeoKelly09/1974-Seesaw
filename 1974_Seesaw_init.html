@@ -1,0 +1,757 @@
+    if (!e.done) {
+    e.done = true;
+
+    // paste the rest of your code 1 here - it has to be wrapped around the "if (!e.done)" line for it to work on the loader
+
+    if (document.getElementById("position-display") == null) {
+
+    function updateCandidateForm() {
+        const form = document.querySelector("#candidate_form form");
+        if (!form) return;
+
+        const heading = form.querySelector("h3");
+        if (!heading) return;
+
+        heading.textContent = "Please select your candidate:";
+    }
+    setInterval(updateCandidateForm, 100);
+
+    function updateRunningMateForm() {
+        const form = document.querySelector("#running_mate_form form");
+        if (!form) return;
+
+        const heading = form.querySelector("h3");
+        if (!heading) return;
+
+        heading.textContent = "Pick a running mate to endorse:";
+    }
+    setInterval(updateRunningMateForm, 100);
+
+    function removeCandidateSummary() {
+        const candidateSummary = document.querySelector("#candidate_summary");
+        if (!candidateSummary) return;
+
+        const ulList = candidateSummary.querySelector("ul:not(.keep-list)");
+        if (ulList) {
+        ulList.remove();
+        }
+    }
+    setInterval(removeCandidateSummary, 100);
+
+    function removeRunningSummary() {
+        const runningSummary = document.querySelector("#running_mate_summary");
+        if (!runningSummary) return;
+
+        const ulList = candidateSummary.querySelector("ul:not(.keep-list)");
+        if (ulList) {
+        ulList.remove();
+        }
+    }
+    setInterval(removeRunningSummary, 100);
+
+    // ✅ FIXED MutationObserver
+    let candidateObserver = new MutationObserver(() => {
+        const candidateSummary = document.querySelector("#candidate_summary");
+        if (!candidateSummary) return;
+
+        const target = candidateSummary?.children?.[0]?.children?.[2];
+        if (!target) return;
+
+        if (target.innerHTML.includes("Home State")) {
+        target.innerHTML = target.innerHTML.replaceAll("Home State", "Constituency");
+        }
+    });
+
+    // ✅ ACTUALLY START OBSERVING
+    candidateObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    }
+
+    campaignTrail_temp.election_json = [
+        {
+            "model": "campaign_trail.election",
+            "pk": 10,
+            "fields": {
+                "year": 1974,
+                "summary": "<p>John Lindsay has been an exile from home for a year, and with his ambition, the Mayor seeks a return to politics in New York. What makes Lindsay so different from the rest of American politicians is that he never seemed to quit, never to falter in achieving his ambitions despite 1972.</p>\n\n</p> So where does a man turn after so long? The Senate. </p>\n\n</p> The Democrats don’t trust him, Javits seems to have the race locked up, and what does Lindsay have to show but a weak image, failed leadership, and stuck drinking his NYC on the Rocks, the Mayor once again is going to put up a fight for himself, one that may not even be possible. </p>\n\n</p> If he fails, it would be another trip on the Political Seesaw.\n</p>",
+                "image_url": "https://files.catbox.moe/ufljpp.png",
+                "winning_electoral_vote_number": 270,
+                "advisor_url": "https://www.jetsimon.com/public/static/images/jordan-cheney-1976.jpg",
+                "recommended_reading": "TBD",
+                "has_visits": 1,
+                "no_electoral_majority_image": "https://www.jetsimon.com/public/static/images/2012-no-majority.jpg",
+                "creator": "Dan Bryan",
+                "display_year": "1974 - Seesaw"
+            }
+        }
+    ]
+
+    campaignTrail_temp.candidate_json = [
+        {
+            "model": "campaign_trail.candidate",
+            "pk": 91,
+            "fields": {
+                "first_name": "John V.",
+                "last_name": "Lindsay",
+                "election": 10,
+                "party": "Democratic?",
+                "state": "Georgia",
+                "priority": 1,
+                "description": "<ul class='keep-list' style='margin-left: 5px'><li><b>Name: John V. Lindsay</b></li><li><b>Party: Democratic?</b></li><li><b>Borough: Manhattan</b></li></ul><p>Lindsay never stuck to his original plans, especially those in his political life. <p>\n\n<p> After spending 8 years in Gracie Mansion, he decided it was time to move to greener pastures, and that grazing ground was the United States Senate. However, among both sides of the aisle, he was seen as a polarizing image, unsuccessful leadership at its finest. Many brought up the Transit, Garbage strikes, Hard Hat riots, a shining city in decay and derelict. <p>\n\nLike everything in life, he felt that this race was like a hand-me-down, worn, gone through, but it doesn’t mean that it isn’t worth the ride. He is ready to fight, show the state that he is more than a failed Mayor, he's the man fighting for his own future, even if everyone hates him for doing so.</p>",
+                "color_hex": "#385fc9",
+                "secondary_color_hex": "#385fc9",
+                "is_active": 1,
+                "image_url": "https://files.catbox.moe/austfq.png",
+                "electoral_victory_message": "<h3>Congratulations! You have won the 1976 Presidential Election.</h3><p>Hopefully you can make good on your promises to clean up Washington and change the political and moral culture of the country. If you are successful, there is no reason you cannot run for reelection in 1980. Just be wary of any economic problems, or of some foreign policy crisis that could dent your popularity.</p>",
+                "electoral_loss_message": "<h3>Sorry, you have lost the 1976 Presidential Election.</h3><p>As an outsider candidate, this was really your moment to make an impact on American politics and to win a national election. The beltway gossip already has it that Ted Kennedy is the frontrunner for the 1980 nomination. Perhaps you can run again for Governor of Georgia, or make an impact in some other way.</p>",
+                "no_electoral_majority_message": "<h3>Wow! You have won in a squeaker.</h3><p>While the Electoral College ended in a tie, the Democrats have a huge advantage in the House of Representatives and are sure to elect you in that manner. Hopefully the closeness of this election doesn't undermine your promises to clean up Washington and unite the people of this country.</p>",
+                "description_as_running_mate": "''",
+                "candidate_score": 1,
+                "running_mate": false
+            }
+        },
+        {
+            "model": "campaign_trail.candidate",
+            "pk": 92,
+            "fields": {
+                "first_name": "Jacob",
+                "last_name": "Javits",
+                "election": 10,
+                "party": "Republican",
+                "state": "New York",
+                "priority": 1,
+                "description": "",
+                "color_hex": "#ba2018",
+                "secondary_color_hex": "#ba2018",
+                "is_active": 0,
+                "image_url": "https://files.catbox.moe/austfq.png",
+                "electoral_victory_message": "<h3>Congratulations! You have won the 1976 Presidential Election.</h3><p>Hopefully you can make good on your promises to clean up Washington and change the political and moral culture of the country. If you are successful, there is no reason you cannot run for reelection in 1980. Just be wary of any economic problems, or of some foreign policy crisis that could dent your popularity.</p>",
+                "electoral_loss_message": "<h3>Sorry, you have lost the 1976 Presidential Election.</h3><p>As an outsider candidate, this was really your moment to make an impact on American politics and to win a national election. The beltway gossip already has it that Ted Kennedy is the frontrunner for the 1980 nomination. Perhaps you can run again for Governor of Georgia, or make an impact in some other way.</p>",
+                "no_electoral_majority_message": "<h3>Wow! You have won in a squeaker.</h3><p>While the Electoral College ended in a tie, the Democrats have a huge advantage in the House of Representatives and are sure to elect you in that manner. Hopefully the closeness of this election doesn't undermine your promises to clean up Washington and unite the people of this country.</p>",
+                "description_as_running_mate": "''",
+                "candidate_score": 1,
+                "running_mate": false
+            }
+        },
+        {
+            "model": "campaign_trail.candidate",
+            "pk": 96,
+            "fields": {
+                "first_name": "Frank",
+                "last_name": "Church",
+                "election": 10,
+                "party": "Democrat",
+                "state": "Idaho",
+                "priority": 6,
+                "description": "''",
+                "color_hex": "#0000FF",
+                "secondary_color_hex": "#90C0FF",
+                "is_active": 0,
+                "image_url": "https://www.jetsimon.com/public/static/images/frank-church-1976.jpg",
+                "electoral_victory_message": "''",
+                "electoral_loss_message": "''",
+                "no_electoral_majority_message": "''",
+                "description_as_running_mate": "<p>Frank Church is a Senator from Idaho, and one of Carter's rivals in the 1976 primaries. He is known for his opposition to the Vietnam War, and his investigations of America's intelligence bureaus. Both of these factors make him appealing to the anti-war bloc of the Democratic Party, and have made him a well-known, national figure in politics. He is also outgoing and charismatic, and could overshadow a more soft-spoken Carter.</p>",
+                "candidate_score": 0,
+                "running_mate": true
+            }
+        }
+    ]
+
+    campaignTrail_temp.running_mate_json = [
+        {
+            "model": "campaign_trail.running_mate",
+            "pk": 59,
+            "fields": {
+                "candidate": 91,
+                "running_mate": 96
+            }
+        }
+    ]
+
+    campaignTrail_temp.credits = "Not Dan Bryan"
+
+    campaignTrail_temp.global_parameter_json = [
+        {
+            "model": "campaign_trail.global_parameter",
+            "pk": 1,
+            "fields": {
+                "vote_variable": 1.125,
+                "max_swing": 0.12,
+                "start_point": 0.94,
+                "candidate_issue_weight": 10,
+                "running_mate_issue_weight": 3,
+                "issue_stance_1_max": -0.71,
+                "issue_stance_2_max": -0.3,
+                "issue_stance_3_max": -0.125,
+                "issue_stance_4_max": 0.125,
+                "issue_stance_5_max": 0.3,
+                "issue_stance_6_max": 0.71,
+                "global_variance": 0.01,
+                "state_variance": 0.005,
+                "question_count": 25,
+                "default_map_color_hex": "#C9C9C9",
+                "no_state_map_color_hex": "#999999"
+            }
+        }
+    ]
+
+    campaignTrail_temp.opponents_default_json = [
+        {
+            "election": 10,
+            "candidates": [
+                91,
+                92
+            ]
+        }
+    ]
+
+    campaignTrail_temp.opponents_weighted_json = [
+        {
+            "election": 10,
+            "candidates": [
+                91,
+                92
+            ]
+        }
+    ]
+
+    campaignTrail_temp.temp_election_list = [
+        {
+            "id": 10,
+            "year": 1976,
+            "is_premium": 0,
+            "display_year": "1974 Seesaw"
+        }
+    ]
+
+    jet_data = {
+        "headerColor": "#a22a2a",
+        "windowColor": "#d4e3ec",
+        "containerColor": "#a27c7c",
+        "innerWindowColor": "#bdbdbd",
+        "bannerImageUrl": "https://files.catbox.moe/hcr4ii.png",
+        "backgroundImageUrl": "https://files.catbox.moe/q5ralj.jpg",
+        "endingTextColor": "#000000",
+        "customQuote": "\"The miniskirt enables young ladies to run faster, and because of it, they may have to.\" - John Lindsay",
+        "gameTitle": "THE NEW YORK SENATE RACE"
+    }
+
+    //#startcode
+
+
+    corrr = '\n              <h2>THE NEW YORK SENATE RACE</h2><font id="wittyquote" size="4" color="white"><em>"The miniskirt enables young ladies to run faster, and because of it, they may have to." - John Lindsay</em></font>\n            ';
+
+
+    nct_stuff.themes[nct_stuff.selectedTheme].coloring_title = "#a22a2a";
+
+    nct_stuff.themes[nct_stuff.selectedTheme].coloring_window = "#d4e3ec";
+
+    document.getElementsByClassName("game_header")[0].style.backgroundColor = nct_stuff.themes[nct_stuff.selectedTheme].coloring_title;
+
+    $("#game_window")[0].style.backgroundColor = nct_stuff.themes[nct_stuff.selectedTheme].coloring_window;
+
+    $(".container")[0].style.backgroundColor = "#a27c7c";
+
+    document.getElementById("header").src = "https://files.catbox.moe/hcr4ii.png";
+
+    document.body.background = "https://files.catbox.moe/q5ralj.jpg";
+
+    document.head.innerHTML += "<style>#results_container {color:#000000;} .inner_window_w_desc {background-color:#bdbdbd!important;}</style>";
+
+    //#endcode
+
+    const windowsAdvisorTargetNode = document.getElementById("game_window");
+        const windowsAdvisorConfig = { attributes: true, childList: true, subtree: true };
+        const callback = (mutationList, observer) => {
+            let visitWindow = document.getElementsByClassName("overlay_window")[0];
+            if (!visitWindow || visitWindow.classList.contains("done")) return;
+            visitWindow.classList.add("done", "window");
+            let titleBar = visitWindow.querySelector("h3");
+            titleBar.classList.add("title-bar", "title-bar-text");
+            titleBar.style.paddingLeft = "3px";
+        };
+        // const observer = new MutationObserver(callback);
+        // observer.observe(windowsAdvisorTargetNode, windowsAdvisorConfig);
+        
+        class Song {
+            constructor(title, artist, coverLink, audioLink) {
+                this.title = title;
+                this.artist = artist;
+                this.coverLink = coverLink; 
+                this.audioLink = audioLink;
+            }
+            getTitle()     { return this.title; }
+            getArtist()    { return this.artist; }
+            getCoverLink() { return this.coverLink; }
+            getAudioLink() { return this.audioLink; }
+        }
+        
+        class Playlist {
+            constructor() {
+                this.songs = [];
+                this.currentSongIndex = 0;
+            }
+            addSong(song) {
+                this.songs.push(song);
+            }
+            getCurrentSong() {
+                return this.songs[this.currentSongIndex];
+            }
+            playNext() {
+                this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+            }
+            playPrevious() {
+                this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+            }
+        }
+        window.Playlist = Playlist;
+        window.Song = Song;
+        
+        function changePlaylist(newPlaylist) {
+            playlist = newPlaylist;
+            playlist.currentSongIndex = 0;
+            updateUI();
+            const audio = document.getElementById("audio");
+            audio.src = playlist.getCurrentSong().getAudioLink();
+            audio.play();
+        }
+        window.changePlaylist = changePlaylist;
+        
+        function updateUI() {
+            const currentSong = playlist.getCurrentSong();
+            document.getElementById("track-title").textContent  = currentSong.getTitle();
+            document.getElementById("track-artist").textContent = currentSong.getArtist();
+            const coverArtElem = document.getElementById("cover-art");
+            if (coverArtElem) {
+                coverArtElem.src = currentSong.getCoverLink();
+            }
+        }
+        
+        function setupMusicPlayer() {
+            playlist = new Playlist();
+        
+            const newSong1 = new Song(
+                "Seesaw", 
+                "Cy Coleman",   
+                "https://i.ibb.co/QqnFxzR/seesaw.jpg",
+                "https://audio.jukehost.co.uk/LMlQ6XlCbU7uiX81zpmsggq7292bEdab"
+            );    
+            const newSong2 = new Song(
+                "The Life of the Party",  
+                "The Jackson 5",            
+                "https://i.ibb.co/kgFXwhVF/download-1.jpg",
+                "https://audio.jukehost.co.uk/tqfg68aXHBuQ5ZALJBCJfMot5uNv7cNV"
+            );
+            const newSong3 = new Song(
+                "Let's Groove",  
+                "Earth, Wind & Fire",            
+                "https://i.ibb.co/GzvGsr4/download-2.jpg",
+                "https://audio.jukehost.co.uk/DMtUUrqKzdUE3KzifWQzOBMtmrbcMdwd"
+            );
+            const newSong4 = new Song(
+                "Copacabana (At the Copa)",  
+                "Barry Manilow",            
+                "https://i.ibb.co/ZRkXsB4x/download-3.jpg",
+                "https://audio.jukehost.co.uk/sxVmo37e1yoMzTt6n3A6lWHwNUBAnwyq"
+            );
+            const newSong5 = new Song(
+                "Come and Get Your Love",  
+                "Redbone",            
+                "https://i.ibb.co/DDcwC9jF/Come-and-Get-Your-Love-Redbone.jpg",
+                "https://audio.jukehost.co.uk/ICzPhCVFwbQUOOxTour3mk7vsDgtIick"
+            );
+            const newSong6 = new Song(
+                "Stayin Alive",  
+                "Bee Gees",            
+                "https://i.ibb.co/7NJzv1tp/download-4.jpg",
+                "https://audio.jukehost.co.uk/v8MAnOKwEab7F1VxQ6PfaE9OpYo9ZgQe"
+            );
+            const newSong7 = new Song(
+                "Gimme! Gimme! Gimme! (A Man After Midnight)",  
+                "ABBA",            
+                "https://i.ibb.co/JFHsF4hX/download-5.jpg",
+                "https://audio.jukehost.co.uk/9J4cY2DPS5OWlOQKcCoNuBUNGx2Valz3"
+            );   
+            
+        
+            playlist.addSong(newSong1);
+            playlist.addSong(newSong2);
+            playlist.addSong(newSong3);
+            playlist.addSong(newSong4);
+            playlist.addSong(newSong5);
+            playlist.addSong(newSong6);
+            playlist.addsong(newSong7);
+
+        
+            let audio = document.getElementById("audio");
+            if (!audio) {
+                audio = document.createElement("audio");
+                audio.id = "audio";
+                document.body.appendChild(audio);
+            }
+            audio.src = playlist.getCurrentSong().getAudioLink();
+        
+            const tapeRecorder = document.createElement("div");
+            tapeRecorder.id = "tape-recorder";
+            const gameWindow_player = document.getElementById("game_window");
+            gameWindow_player.insertAdjacentElement("afterend", tapeRecorder);
+        
+            const infoOverlay = document.createElement("div");
+            infoOverlay.id = "info-overlay";
+        
+            const titleDiv = document.createElement("div");
+            titleDiv.id = "track-title";
+        
+            const artistDiv = document.createElement("div");
+            artistDiv.id = "track-artist";
+        
+            infoOverlay.appendChild(titleDiv);
+            infoOverlay.appendChild(artistDiv);
+            tapeRecorder.appendChild(infoOverlay);
+        
+            const coverWrapper = document.createElement("div");
+            coverWrapper.id = "cover-wrapper";
+            tapeRecorder.appendChild(coverWrapper);
+        
+            const coverBG = document.createElement("img");
+            coverBG.id = "cover-bg";
+            coverBG.src = "https://i.imgur.com/E2mOaNa.png";
+        
+            const coverArt = document.createElement("img");
+            coverArt.id = "cover-art";
+            coverArt.src = playlist.getCurrentSong().getCoverLink();
+        
+            coverWrapper.appendChild(coverBG);
+            coverWrapper.appendChild(coverArt);
+        
+            const playerBottom = document.createElement("div");
+            playerBottom.id = "player-bottom";
+            tapeRecorder.appendChild(playerBottom);
+        
+            const controlsOverlay = document.createElement("div");
+            controlsOverlay.id = "controls-overlay";
+        
+            const prevButton = document.createElement("button");
+            prevButton.id = "prev-button";
+            prevButton.textContent = "←";
+            prevButton.addEventListener("click", () => {
+                playlist.playPrevious();
+                updateUI();
+                audio.src = playlist.getCurrentSong().getAudioLink();
+                audio.currentTime = 0;
+                audio.play();
+                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+                toggleButton.textContent = "Stop";
+            });
+        
+            const nextButton = document.createElement("button");
+            nextButton.id = "next-button";
+            nextButton.textContent = "→";
+            nextButton.addEventListener("click", () => {
+                playlist.playNext();
+                updateUI();
+                audio.src = playlist.getCurrentSong().getAudioLink();
+                audio.currentTime = 0;
+                audio.play();
+                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+                toggleButton.textContent = "Stop";
+            });
+        
+            const volumeSlider = document.createElement("input");
+            volumeSlider.id = "volume-slider";
+            volumeSlider.type = "range";
+            volumeSlider.min = "0";
+            volumeSlider.max = "100";
+            volumeSlider.value = "50";
+            volumeSlider.addEventListener("input", function() {
+                const volumeValue = parseFloat(this.value) / 100;
+                audio.volume = volumeValue;
+            });
+        
+            const toggleButton = document.createElement("button");
+            toggleButton.id = "toggle-button";
+            tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+            toggleButton.textContent = "Stop";
+            toggleButton.addEventListener("click", () => {
+                if (audio.paused) {
+                    audio.play();
+                    tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+                    toggleButton.textContent = "Stop";
+                } else {
+                    audio.pause();
+                    tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/Bui2rFO.png')";
+                    toggleButton.textContent = "Start";
+                }
+            });
+        
+            controlsOverlay.appendChild(prevButton);
+            controlsOverlay.appendChild(nextButton);
+            controlsOverlay.appendChild(volumeSlider);
+            controlsOverlay.appendChild(toggleButton);
+            playerBottom.appendChild(controlsOverlay);
+        
+            const progressContainer = document.createElement("div");
+            progressContainer.id = "progress-container";
+        
+            const progressBar = document.createElement("input");
+            progressBar.id = "progress-bar";
+            progressBar.type = "range";
+            progressBar.min = 0;
+            progressBar.value = 0;
+            progressBar.step = 1;
+        
+            progressBar.addEventListener("input", (e) => {
+                audio.currentTime = parseFloat(e.target.value);
+            });
+        
+            progressContainer.appendChild(progressBar);
+            playerBottom.appendChild(progressContainer);
+        
+            audio.addEventListener("ended", () => {
+                playlist.playNext();
+                updateUI();
+                audio.src = playlist.getCurrentSong().getAudioLink();
+                audio.currentTime = 0;
+                audio.play();
+                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+                toggleButton.textContent = "Stop";
+            });
+        
+            updateUI();
+        
+            audio.addEventListener("timeupdate", () => {
+                if (!audio.duration || isNaN(audio.duration)) return;
+                progressBar.max = audio.duration;
+                progressBar.value = audio.currentTime;
+            });
+        
+            audio.play().then(() => {
+                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
+                toggleButton.textContent = "Stop";
+            }).catch(() => {
+                console.log("Autoplay blocked. Waiting for user interaction...");
+                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/Bui2rFO.png')";
+                toggleButton.textContent = "Start";
+            });
+        }
+        
+        const style = document.createElement("style");
+        style.textContent = `
+        #tape-recorder {
+        width: 495px;
+        height: 325px;
+        transform: scale(0.85);
+        background-position: center;
+        background-size: cover;
+        position: absolute;
+        display: block;
+        margin: 0 auto;
+        }
+        
+        #info-overlay {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #fff;
+        font-family: sans-serif;
+        text-shadow: 1px 1px 2px black;
+        }
+        #track-title {
+        font-size: 18px;
+        font-weight: bold;
+        }
+        #track-artist {
+        font-size: 14px;
+        margin-top: 3px;
+        }
+        
+        #cover-wrapper {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+        pointer-events: none;
+        }
+        #cover-bg {
+        position: absolute;
+        width: 200px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        }
+        #cover-art {
+        position: absolute;
+        width: 180px;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        }
+        
+        #player-bottom {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        z-index: 2;
+        }
+        #controls-overlay {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        }
+        
+        #prev-button,
+        #next-button,
+        #toggle-button {
+        appearance: auto;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        font-stretch: normal;
+        font-size: 1rem;
+        font-family: inherit;
+        text-rendering: auto;
+        color: buttontext;
+        letter-spacing: normal;
+        word-spacing: normal;
+        line-height: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: center;
+        align-items: flex-start;
+        cursor: pointer;
+        box-sizing: border-box;
+        background-color: buttonface;
+        margin: 0em;
+        border-width: 2px;
+        border-style: outset;
+        border-color: buttonborder;
+        border-image: initial;
+        padding: 6px 10px;
+        min-width: 60px;
+        }
+        #prev-button:hover,
+        #next-button:hover,
+        #toggle-button:hover {
+        border-style: inset;
+        background-color: #e0e0e0;
+        }
+        
+        #volume-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100px;
+        height: 14px;
+        background-color: buttonface;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        cursor: pointer;
+        }
+        #volume-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 24px;
+        background: buttonface;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-top: -5px;
+        }
+        #volume-slider::-moz-range-thumb {
+        width: 14px;
+        height: 24px;
+        background: buttonface;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        }
+        
+        #progress-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        }
+        #progress-bar {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 200px;
+        height: 14px;
+        background-color: #515151;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        cursor: pointer;
+        }
+        #progress-bar::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 24px;
+        background: #d0d0d0;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-top: -5px;
+        }
+        #progress-bar::-moz-range-thumb {
+        width: 14px;
+        height: 24px;
+        background: #d0d0d0;
+        border: 2px solid buttonborder;
+        border-radius: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+        }
+        
+        #bonus_menu_area {
+        margin-top: 120px;
+        }
+        `;
+        document.head.appendChild(style);
+        
+        setupMusicPlayer();
+
+
+    styling = document.createElement("style");
+    document.head.appendChild(styling);
+
+    styling.innerHTML = `
+    #opponent_selection_id_back {
+        display: none;
+    }
+    `
+
+    let z = new MutationObserver((mutationsList, observer) => {
+        let runningMateSummary = document.querySelector("#running_mate_summary");
+        if (runningMateSummary) {
+            $("#running_mate_id_button").click();
+            observer.disconnect()
+        }
+    });
+
+
+    z.observe(document, { subtree: true, childList: true });
+
+    }
