@@ -81,9 +81,9 @@
                 "winning_electoral_vote_number": 270,
                 "advisor_url": "https://www.jetsimon.com/public/static/images/jordan-cheney-1976.jpg",
                 "recommended_reading": "TBD",
-                "has_visits": 1,
+                "has_visits": 0,
                 "no_electoral_majority_image": "https://www.jetsimon.com/public/static/images/2012-no-majority.jpg",
-                "creator": "Dan Bryan",
+                "creator": "NumberOneLeo + HistoryMan",
                 "display_year": "1974 - Seesaw"
             }
         }
@@ -172,7 +172,49 @@
         }
     ]
 
-    campaignTrail_temp.credits = "Not Dan Bryan"
+    campaignTrail_temp.credits = `
+    <button id="credits_button" style="
+    padding:2px 6px;
+    font-size:11px;
+    cursor:pointer;
+    ">
+    Credits
+    </button>
+
+    <div id="credits_box" style="
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    background:white;
+    border:2px solid black;
+    padding:15px;
+    width:350px;
+    z-index:9999;
+    box-shadow:0 0 15px rgba(0,0,0,0.4);
+    font-size:14px;
+    ">
+
+    <h3 style="font-family: fan;">Credits!</h3>
+
+    <p><b>NumberOneLeo</b>: Sid! (Coder)</p>
+    <p><b>HistoryMan</b>: Mayor Lindsay (Writer)</p>
+    <p><b>Underscore</b>: Field Office Manager (Consultant, Poster Maker)</p>
+    <p><b>Homer</b>: Field Office Manager (Consultant, Banner Maker)</p>
+    <p><b>MeerkatHistorian1924</b>: Aide (Consultant)</p>
+    <p><b>WNUDIA</b>: Aide (Consultant)</p>
+
+    <br>
+
+<p><em>To you, the Voter, for playing <b>1974 – Seesaw!</b> Enjoy!</em></p>
+
+    <br>
+
+    <button id="close_credits">Close</button>
+
+    </div>
+    `;
 
     campaignTrail_temp.global_parameter_json = [
         {
@@ -265,483 +307,436 @@
     //#endcode
 
     const windowsAdvisorTargetNode = document.getElementById("game_window");
-        const windowsAdvisorConfig = { attributes: true, childList: true, subtree: true };
-        const callback = (mutationList, observer) => {
-            let visitWindow = document.getElementsByClassName("overlay_window")[0];
-            if (!visitWindow || visitWindow.classList.contains("done")) return;
-            visitWindow.classList.add("done", "window");
-            let titleBar = visitWindow.querySelector("h3");
-            titleBar.classList.add("title-bar", "title-bar-text");
-            titleBar.style.paddingLeft = "3px";
-        };
-        // const observer = new MutationObserver(callback);
-        // observer.observe(windowsAdvisorTargetNode, windowsAdvisorConfig);
-        
-        class Song {
-            constructor(title, artist, coverLink, audioLink) {
-                this.title = title;
-                this.artist = artist;
-                this.coverLink = coverLink; 
-                this.audioLink = audioLink;
-            }
-            getTitle()     { return this.title; }
-            getArtist()    { return this.artist; }
-            getCoverLink() { return this.coverLink; }
-            getAudioLink() { return this.audioLink; }
-        }
-        
-        class Playlist {
-            constructor() {
-                this.songs = [];
-                this.currentSongIndex = 0;
-            }
-            addSong(song) {
-                this.songs.push(song);
-            }
-            getCurrentSong() {
-                return this.songs[this.currentSongIndex];
-            }
-            playNext() {
-                this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
-            }
-            playPrevious() {
-                this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
-            }
-        }
-        window.Playlist = Playlist;
-        window.Song = Song;
-        
-        function changePlaylist(newPlaylist) {
-            playlist = newPlaylist;
-            playlist.currentSongIndex = 0;
-            updateUI();
-            const audio = document.getElementById("audio");
-            audio.src = playlist.getCurrentSong().getAudioLink();
-            audio.play();
-        }
-        window.changePlaylist = changePlaylist;
-        
-        function updateUI() {
-            const currentSong = playlist.getCurrentSong();
-            document.getElementById("track-title").textContent  = currentSong.getTitle();
-            document.getElementById("track-artist").textContent = currentSong.getArtist();
-            const coverArtElem = document.getElementById("cover-art");
-            if (coverArtElem) {
-                coverArtElem.src = currentSong.getCoverLink();
-            }
-        }
-        
-        function setupMusicPlayer() {
-            playlist = new Playlist();
-        
-            const newSong1 = new Song(
-                "Seesaw", 
-                "Cy Coleman",   
-                "https://i.ibb.co/QqnFxzR/seesaw.jpg",
-                "https://audio.jukehost.co.uk/LMlQ6XlCbU7uiX81zpmsggq7292bEdab"
-            );    
-            const newSong2 = new Song(
-                "The Life of the Party",  
-                "The Jackson 5",            
-                "https://i.ibb.co/kgFXwhVF/download-1.jpg",
-                "https://audio.jukehost.co.uk/tqfg68aXHBuQ5ZALJBCJfMot5uNv7cNV"
-            );
-            const newSong3 = new Song(
-                "Let's Groove",  
-                "Earth, Wind & Fire",            
-                "https://i.ibb.co/GzvGsr4/download-2.jpg",
-                "https://audio.jukehost.co.uk/DMtUUrqKzdUE3KzifWQzOBMtmrbcMdwd"
-            );
-            const newSong4 = new Song(
-                "Copacabana (At the Copa)",  
-                "Barry Manilow",            
-                "https://i.ibb.co/ZRkXsB4x/download-3.jpg",
-                "https://audio.jukehost.co.uk/sxVmo37e1yoMzTt6n3A6lWHwNUBAnwyq"
-            );
-            const newSong5 = new Song(
-                "Come and Get Your Love",  
-                "Redbone",            
-                "https://i.ibb.co/DDcwC9jF/Come-and-Get-Your-Love-Redbone.jpg",
-                "https://audio.jukehost.co.uk/ICzPhCVFwbQUOOxTour3mk7vsDgtIick"
-            );
-            const newSong6 = new Song(
-                "Stayin Alive",  
-                "Bee Gees",            
-                "https://i.ibb.co/7NJzv1tp/download-4.jpg",
-                "https://audio.jukehost.co.uk/v8MAnOKwEab7F1VxQ6PfaE9OpYo9ZgQe"
-            );
-            const newSong7 = new Song(
-                "Gimme! Gimme! Gimme! (A Man After Midnight)",  
-                "ABBA",            
-                "https://i.ibb.co/JFHsF4hX/download-5.jpg",
-                "https://audio.jukehost.co.uk/9J4cY2DPS5OWlOQKcCoNuBUNGx2Valz3"
-            );   
-            
-        
-            playlist.addSong(newSong1);
-            playlist.addSong(newSong2);
-            playlist.addSong(newSong3);
-            playlist.addSong(newSong4);
-            playlist.addSong(newSong5);
-            playlist.addSong(newSong6);
-            playlist.addsong(newSong7);
+const windowsAdvisorConfig = { attributes: true, childList: true, subtree: true };
+const callback = (mutationList, observer) => {
+    let visitWindow = document.getElementsByClassName("overlay_window")[0];
+    if (!visitWindow || visitWindow.classList.contains("done")) return;
+    visitWindow.classList.add("done", "window");
+    let titleBar = visitWindow.querySelector("h3");
+    titleBar.classList.add("title-bar", "title-bar-text");
+    titleBar.style.paddingLeft = "3px";
+};
 
-        
-            let audio = document.getElementById("audio");
-            if (!audio) {
-                audio = document.createElement("audio");
-                audio.id = "audio";
-                document.body.appendChild(audio);
-            }
-            audio.src = playlist.getCurrentSong().getAudioLink();
-        
-            const tapeRecorder = document.createElement("div");
-            tapeRecorder.id = "tape-recorder";
-            const gameWindow_player = document.getElementById("game_window");
-            gameWindow_player.insertAdjacentElement("afterend", tapeRecorder);
-        
-            const infoOverlay = document.createElement("div");
-            infoOverlay.id = "info-overlay";
-        
-            const titleDiv = document.createElement("div");
-            titleDiv.id = "track-title";
-        
-            const artistDiv = document.createElement("div");
-            artistDiv.id = "track-artist";
-        
-            infoOverlay.appendChild(titleDiv);
-            infoOverlay.appendChild(artistDiv);
-            tapeRecorder.appendChild(infoOverlay);
-        
-            const coverWrapper = document.createElement("div");
-            coverWrapper.id = "cover-wrapper";
-            tapeRecorder.appendChild(coverWrapper);
-        
-            const coverBG = document.createElement("img");
-            coverBG.id = "cover-bg";
-            coverBG.src = "https://i.imgur.com/E2mOaNa.png";
-        
-            const coverArt = document.createElement("img");
-            coverArt.id = "cover-art";
-            coverArt.src = playlist.getCurrentSong().getCoverLink();
-        
-            coverWrapper.appendChild(coverBG);
-            coverWrapper.appendChild(coverArt);
-        
-            const playerBottom = document.createElement("div");
-            playerBottom.id = "player-bottom";
-            tapeRecorder.appendChild(playerBottom);
-        
-            const controlsOverlay = document.createElement("div");
-            controlsOverlay.id = "controls-overlay";
-        
-            const prevButton = document.createElement("button");
-            prevButton.id = "prev-button";
-            prevButton.textContent = "←";
-            prevButton.addEventListener("click", () => {
-                playlist.playPrevious();
-                updateUI();
-                audio.src = playlist.getCurrentSong().getAudioLink();
-                audio.currentTime = 0;
-                audio.play();
-                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-                toggleButton.textContent = "Stop";
-            });
-        
-            const nextButton = document.createElement("button");
-            nextButton.id = "next-button";
-            nextButton.textContent = "→";
-            nextButton.addEventListener("click", () => {
-                playlist.playNext();
-                updateUI();
-                audio.src = playlist.getCurrentSong().getAudioLink();
-                audio.currentTime = 0;
-                audio.play();
-                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-                toggleButton.textContent = "Stop";
-            });
-        
-            const volumeSlider = document.createElement("input");
-            volumeSlider.id = "volume-slider";
-            volumeSlider.type = "range";
-            volumeSlider.min = "0";
-            volumeSlider.max = "100";
-            volumeSlider.value = "50";
-            volumeSlider.addEventListener("input", function() {
-                const volumeValue = parseFloat(this.value) / 100;
-                audio.volume = volumeValue;
-            });
-        
-            const toggleButton = document.createElement("button");
-            toggleButton.id = "toggle-button";
-            tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-            toggleButton.textContent = "Stop";
-            toggleButton.addEventListener("click", () => {
-                if (audio.paused) {
-                    audio.play();
-                    tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-                    toggleButton.textContent = "Stop";
-                } else {
-                    audio.pause();
-                    tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/Bui2rFO.png')";
-                    toggleButton.textContent = "Start";
-                }
-            });
-        
-            controlsOverlay.appendChild(prevButton);
-            controlsOverlay.appendChild(nextButton);
-            controlsOverlay.appendChild(volumeSlider);
-            controlsOverlay.appendChild(toggleButton);
-            playerBottom.appendChild(controlsOverlay);
-        
-            const progressContainer = document.createElement("div");
-            progressContainer.id = "progress-container";
-        
-            const progressBar = document.createElement("input");
-            progressBar.id = "progress-bar";
-            progressBar.type = "range";
-            progressBar.min = 0;
-            progressBar.value = 0;
-            progressBar.step = 1;
-        
-            progressBar.addEventListener("input", (e) => {
-                audio.currentTime = parseFloat(e.target.value);
-            });
-        
-            progressContainer.appendChild(progressBar);
-            playerBottom.appendChild(progressContainer);
-        
-            audio.addEventListener("ended", () => {
-                playlist.playNext();
-                updateUI();
-                audio.src = playlist.getCurrentSong().getAudioLink();
-                audio.currentTime = 0;
-                audio.play();
-                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-                toggleButton.textContent = "Stop";
-            });
-        
-            updateUI();
-        
-            audio.addEventListener("timeupdate", () => {
-                if (!audio.duration || isNaN(audio.duration)) return;
-                progressBar.max = audio.duration;
-                progressBar.value = audio.currentTime;
-            });
-        
-            audio.play().then(() => {
-                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/I7jF0Ak.gif')";
-                toggleButton.textContent = "Stop";
-            }).catch(() => {
-                console.log("Autoplay blocked. Waiting for user interaction...");
-                tapeRecorder.style.backgroundImage = "url('https://i.imgur.com/Bui2rFO.png')";
-                toggleButton.textContent = "Start";
-            });
-        }
-        
-        const style = document.createElement("style");
-        style.textContent = `
-        #tape-recorder {
-        width: 495px;
-        height: 325px;
-        transform: scale(0.85);
-        background-position: center;
-        background-size: cover;
-        position: absolute;
-        display: block;
-        margin: 0 auto;
-        }
-        
-        #info-overlay {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        color: #fff;
-        font-family: sans-serif;
-        text-shadow: 1px 1px 2px black;
-        }
-        #track-title {
-        font-size: 18px;
-        font-weight: bold;
-        }
-        #track-artist {
-        font-size: 14px;
-        margin-top: 3px;
-        }
-        
-        #cover-wrapper {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1;
-        pointer-events: none;
-        }
-        #cover-bg {
-        position: absolute;
-        width: 200px;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        }
-        #cover-art {
-        position: absolute;
-        width: 180px;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        }
-        
-        #player-bottom {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        z-index: 2;
-        }
-        #controls-overlay {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        }
-        
-        #prev-button,
-        #next-button,
-        #toggle-button {
-        appearance: auto;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: normal;
-        font-stretch: normal;
-        font-size: 1rem;
-        font-family: inherit;
-        text-rendering: auto;
-        color: buttontext;
-        letter-spacing: normal;
-        word-spacing: normal;
-        line-height: normal;
-        text-transform: none;
-        text-indent: 0px;
-        text-shadow: none;
-        display: inline-block;
-        text-align: center;
-        align-items: flex-start;
-        cursor: pointer;
-        box-sizing: border-box;
-        background-color: buttonface;
-        margin: 0em;
-        border-width: 2px;
-        border-style: outset;
-        border-color: buttonborder;
-        border-image: initial;
-        padding: 6px 10px;
-        min-width: 60px;
-        }
-        #prev-button:hover,
-        #next-button:hover,
-        #toggle-button:hover {
-        border-style: inset;
-        background-color: #e0e0e0;
-        }
-        
-        #volume-slider {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 100px;
-        height: 14px;
-        background-color: buttonface;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        cursor: pointer;
-        }
-        #volume-slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 14px;
-        height: 24px;
-        background: buttonface;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        margin-top: -5px;
-        }
-        #volume-slider::-moz-range-thumb {
-        width: 14px;
-        height: 24px;
-        background: buttonface;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        }
-        
-        #progress-container {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: center;
-        }
-        #progress-bar {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 200px;
-        height: 14px;
-        background-color: #515151;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        cursor: pointer;
-        }
-        #progress-bar::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 14px;
-        height: 24px;
-        background: #d0d0d0;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        margin-top: -5px;
-        }
-        #progress-bar::-moz-range-thumb {
-        width: 14px;
-        height: 24px;
-        background: #d0d0d0;
-        border: 2px solid buttonborder;
-        border-radius: 0;
-        cursor: pointer;
-        box-sizing: border-box;
-        }
-        
-        #bonus_menu_area {
-        margin-top: 120px;
-        }
-        `;
-        document.head.appendChild(style);
-        
-        setupMusicPlayer();
-
-
-    styling = document.createElement("style");
-    document.head.appendChild(styling);
-
-    styling.innerHTML = `
-    #opponent_selection_id_back {
-        display: none;
+class Song {
+    constructor(title, artist, coverLink, audioLink) {
+        this.title = title;
+        this.artist = artist;
+        this.coverLink = coverLink;
+        this.audioLink = audioLink;
     }
-    `
+    getTitle()     { return this.title; }
+    getArtist()    { return this.artist; }
+    getCoverLink() { return this.coverLink; }
+    getAudioLink() { return this.audioLink; }
+}
+
+class Playlist {
+    constructor() {
+        this.songs = [];
+        this.currentSongIndex = 0;
+    }
+    addSong(song) {
+        this.songs.push(song);
+    }
+    getCurrentSong() {
+        return this.songs[this.currentSongIndex];
+    }
+    playNext() {
+        this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+    }
+    playPrevious() {
+        this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+    }
+}
+window.Playlist = Playlist;
+window.Song = Song;
+
+function changePlaylist(newPlaylist) {
+    playlist = newPlaylist;
+    playlist.currentSongIndex = 0;
+    updateUI();
+    const audio = document.getElementById("audio");
+    audio.src = playlist.getCurrentSong().getAudioLink();
+    audio.play();
+}
+window.changePlaylist = changePlaylist;
+
+function updateUI() {
+    const currentSong = playlist.getCurrentSong();
+    document.getElementById("track-title").textContent  = currentSong.getTitle();
+    document.getElementById("track-artist").textContent = currentSong.getArtist();
+    const coverArtElem = document.getElementById("cover-art");
+    if (coverArtElem) {
+        coverArtElem.src = currentSong.getCoverLink();
+    }
+}
+
+const STATIC_BG = "url('https://www.onlygfx.com/wp-content/uploads/2022/01/vintage-radio.png')";
+
+function setupMusicPlayer() {
+    playlist = new Playlist();
+
+    const newSong1 = new Song(
+        "Seesaw",
+        "Cy Coleman",
+        "https://i.ibb.co/QqnFxzR/seesaw.jpg",
+        "https://audio.jukehost.co.uk/LMlQ6XlCbU7uiX81zpmsggq7292bEdab"
+    );
+    const newSong2 = new Song(
+        "The Life of the Party",
+        "The Jackson 5",
+        "https://i.ibb.co/kgFXwhVF/download-1.jpg",
+        "https://audio.jukehost.co.uk/tqfg68aXHBuQ5ZALJBCJfMot5uNv7cNV"
+    );
+    const newSong3 = new Song(
+        "Let's Groove",
+        "Earth, Wind & Fire",
+        "https://i.ibb.co/GzvGsr4/download-2.jpg",
+        "https://audio.jukehost.co.uk/DMtUUrqKzdUE3KzifWQzOBMtmrbcMdwd"
+    );
+    const newSong4 = new Song(
+        "Copacabana (At the Copa)",
+        "Barry Manilow",
+        "https://i.ibb.co/ZRkXsB4x/download-3.jpg",
+        "https://audio.jukehost.co.uk/sxVmo37e1yoMzTt6n3A6lWHwNUBAnwyq"
+    );
+    const newSong5 = new Song(
+        "Come and Get Your Love",
+        "Redbone",
+        "https://i.ibb.co/DDcwC9jF/Come-and-Get-Your-Love-Redbone.jpg",
+        "https://audio.jukehost.co.uk/ICzPhCVFwbQUOOxTour3mk7vsDgtIick"
+    );
+    const newSong6 = new Song(
+        "Stayin Alive",
+        "Bee Gees",
+        "https://i.ibb.co/7NJzv1tp/download-4.jpg",
+        "https://audio.jukehost.co.uk/v8MAnOKwEab7F1VxQ6PfaE9OpYo9ZgQe"
+    );
+    const newSong7 = new Song(
+        "Gimme! Gimme! Gimme! (A Man After Midnight)",
+        "ABBA",
+        "https://i.ibb.co/JFHsF4hX/download-5.jpg",
+        "https://audio.jukehost.co.uk/9J4cY2DPS5OWlOQKcCoNuBUNGx2Valz3"
+    );
+
+    playlist.addSong(newSong1);
+    playlist.addSong(newSong2);
+    playlist.addSong(newSong3);
+    playlist.addSong(newSong4);
+    playlist.addSong(newSong5);
+    playlist.addSong(newSong6);
+    playlist.addSong(newSong7);
+
+    let audio = document.getElementById("audio");
+    if (!audio) {
+        audio = document.createElement("audio");
+        audio.id = "audio";
+        document.body.appendChild(audio);
+    }
+    audio.src = playlist.getCurrentSong().getAudioLink();
+
+    const tapeRecorder = document.createElement("div");
+    tapeRecorder.id = "tape-recorder";
+    tapeRecorder.style.backgroundImage = STATIC_BG;
+    const gameWindow_player = document.getElementById("game_window");
+    gameWindow_player.insertAdjacentElement("afterend", tapeRecorder);
+
+    const infoOverlay = document.createElement("div");
+    infoOverlay.id = "info-overlay";
+
+    const titleDiv = document.createElement("div");
+    titleDiv.id = "track-title";
+
+    const artistDiv = document.createElement("div");
+    artistDiv.id = "track-artist";
+
+    infoOverlay.appendChild(titleDiv);
+    infoOverlay.appendChild(artistDiv);
+    tapeRecorder.appendChild(infoOverlay);
+
+    const coverWrapper = document.createElement("div");
+    coverWrapper.id = "cover-wrapper";
+    tapeRecorder.appendChild(coverWrapper);
+
+    const coverBG = document.createElement("img");
+    coverBG.id = "cover-bg";
+    coverBG.src = "https://i.imgur.com/E2mOaNa.png";
+
+    const coverArt = document.createElement("img");
+    coverArt.id = "cover-art";
+    coverArt.src = playlist.getCurrentSong().getCoverLink();
+
+    coverWrapper.appendChild(coverBG);
+    coverWrapper.appendChild(coverArt);
+
+    const playerBottom = document.createElement("div");
+    playerBottom.id = "player-bottom";
+    tapeRecorder.appendChild(playerBottom);
+
+    const controlsOverlay = document.createElement("div");
+    controlsOverlay.id = "controls-overlay";
+
+    const prevButton = document.createElement("button");
+    prevButton.id = "prev-button";
+    prevButton.textContent = "←";
+    prevButton.addEventListener("click", () => {
+        playlist.playPrevious();
+        updateUI();
+        audio.src = playlist.getCurrentSong().getAudioLink();
+        audio.currentTime = 0;
+        audio.play();
+        toggleButton.textContent = "Stop";
+    });
+
+    const nextButton = document.createElement("button");
+    nextButton.id = "next-button";
+    nextButton.textContent = "→";
+    nextButton.addEventListener("click", () => {
+        playlist.playNext();
+        updateUI();
+        audio.src = playlist.getCurrentSong().getAudioLink();
+        audio.currentTime = 0;
+        audio.play();
+        toggleButton.textContent = "Stop";
+    });
+
+    const volumeSlider = document.createElement("input");
+    volumeSlider.id = "volume-slider";
+    volumeSlider.type = "range";
+    volumeSlider.min = "0";
+    volumeSlider.max = "100";
+    volumeSlider.value = "50";
+    volumeSlider.addEventListener("input", function() {
+        audio.volume = parseFloat(this.value) / 100;
+    });
+
+    const toggleButton = document.createElement("button");
+    toggleButton.id = "toggle-button";
+    toggleButton.textContent = "Stop";
+    toggleButton.addEventListener("click", () => {
+        if (audio.paused) {
+            audio.play();
+            toggleButton.textContent = "Stop";
+        } else {
+            audio.pause();
+            toggleButton.textContent = "Start";
+        }
+    });
+
+    controlsOverlay.appendChild(prevButton);
+    controlsOverlay.appendChild(nextButton);
+    controlsOverlay.appendChild(volumeSlider);
+    controlsOverlay.appendChild(toggleButton);
+    playerBottom.appendChild(controlsOverlay);
+
+    const progressContainer = document.createElement("div");
+    progressContainer.id = "progress-container";
+
+    const progressBar = document.createElement("input");
+    progressBar.id = "progress-bar";
+    progressBar.type = "range";
+    progressBar.min = 0;
+    progressBar.value = 0;
+    progressBar.step = 1;
+    progressBar.addEventListener("input", (e) => {
+        audio.currentTime = parseFloat(e.target.value);
+    });
+
+    progressContainer.appendChild(progressBar);
+    playerBottom.appendChild(progressContainer);
+
+    audio.addEventListener("ended", () => {
+        playlist.playNext();
+        updateUI();
+        audio.src = playlist.getCurrentSong().getAudioLink();
+        audio.currentTime = 0;
+        audio.play();
+        toggleButton.textContent = "Stop";
+    });
+
+    updateUI();
+
+    audio.addEventListener("timeupdate", () => {
+        if (!audio.duration || isNaN(audio.duration)) return;
+        progressBar.max = audio.duration;
+        progressBar.value = audio.currentTime;
+    });
+
+    audio.play().then(() => {
+        toggleButton.textContent = "Stop";
+    }).catch(() => {
+        console.log("Autoplay blocked. Waiting for user interaction...");
+        toggleButton.textContent = "Start";
+    });
+}
+
+const style = document.createElement("style");
+style.textContent = `
+#tape-recorder {
+    width: 495px;
+    height: 325px;
+    transform: scale(0.85);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    display: block;
+    margin: 0 auto;
+}
+#info-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+    font-family: sans-serif;
+    text-shadow: 1px 1px 2px black;
+}
+#track-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+#track-artist {
+    font-size: 14px;
+    margin-top: 3px;
+}
+#cover-wrapper {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    pointer-events: none;
+}
+#cover-bg {
+    position: absolute;
+    width: 200px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#cover-art {
+    position: absolute;
+    width: 180px;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#player-bottom {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+#controls-overlay {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+#prev-button,
+#next-button,
+#toggle-button {
+    appearance: auto;
+    font-size: 1rem;
+    font-family: inherit;
+    color: buttontext;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: buttonface;
+    margin: 0em;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    padding: 6px 10px;
+    min-width: 60px;
+}
+#prev-button:hover,
+#next-button:hover,
+#toggle-button:hover {
+    border-style: inset;
+    background-color: #e0e0e0;
+}
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 14px;
+    background-color: buttonface;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+}
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 24px;
+    background: buttonface;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+    margin-top: -5px;
+}
+#volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 24px;
+    background: buttonface;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+}
+#progress-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+#progress-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 14px;
+    background-color: #515151;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+}
+#progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 24px;
+    background: #d0d0d0;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+    margin-top: -5px;
+}
+#progress-bar::-moz-range-thumb {
+    width: 14px;
+    height: 24px;
+    background: #d0d0d0;
+    border: 2px solid buttonborder;
+    border-radius: 0;
+    cursor: pointer;
+}
+#bonus_menu_area {
+    margin-top: 120px;
+}
+`;
+document.head.appendChild(style);
+
+setupMusicPlayer();
+
+const styling = document.createElement("style");
+styling.innerHTML = `
+#opponent_selection_id_back {
+    display: none;
+}
+`;
+document.head.appendChild(styling);
 
     let z = new MutationObserver((mutationsList, observer) => {
         let runningMateSummary = document.querySelector("#running_mate_summary");
@@ -755,3 +750,31 @@
     z.observe(document, { subtree: true, childList: true });
 
     }
+
+function openCreditsBox() {
+    document.getElementById("credits_box").style.display = "block";
+}
+
+function closeCreditsBox() {
+    document.getElementById("credits_box").style.display = "none";
+}
+
+setInterval(() => {
+    const btn = document.getElementById("credits_button");
+    const box = document.getElementById("credits_box");
+    const close = document.getElementById("close_credits");
+
+    if (btn && box && close && !btn.classList.contains("ready")) {
+
+        btn.classList.add("ready");
+
+        btn.addEventListener("click", () => {
+            box.style.display = "block";
+        });
+
+        close.addEventListener("click", () => {
+            box.style.display = "none";
+        });
+    }
+
+}, 200);
